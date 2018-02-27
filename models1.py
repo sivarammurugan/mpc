@@ -65,7 +65,7 @@ def secondorder(u,k,tau1,tau2,dt):
     y_arr = np.array(ys)
     return y_arr
  
-def secondorder2(u,k1,k2,tau1,tau2,dt):
+def secondorder(u,k1,k2,tau1,tau2,dt):
     y1  = 0
     y2 = 0
     dy1dt =0
@@ -84,9 +84,8 @@ def secondorder2(u,k1,k2,tau1,tau2,dt):
             y1 += dy1dt
             dy2dt = (k2*u_int(t-dt) - y2) /tau2
             y2 += dy2dt
-            
-            
         y += (dy1dt+dy2dt)
         ys.append(y)
     y_arr = np.array(ys)
-    return y_arr    
+    return y_arr
+
