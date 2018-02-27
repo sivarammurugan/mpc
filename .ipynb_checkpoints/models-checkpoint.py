@@ -65,3 +65,28 @@ def secondorder(u,k,tau1,tau2,dt):
     y_arr = np.array(ys)
     return y_arr
  
+def secondorder2(u,k1,k2,tau1,tau2,dt):
+    y1  = 0
+    y2 = 0
+    dy1dt =0
+    dy2dt = 0
+    dydt = 0
+    ys = []
+    ts = range(len(u))
+    u_int = interp1d(ts,u)
+    for t in ts :
+        if (t-dt ) < 0:
+            dy1dt = 0
+            dy2dt =0
+            dydt = 0
+        else:
+            dy1dt = (k1*u_int(t-dt) - y1) /tau1  # driving force for dy1dt
+            y1 += dy1dt
+            dy2dt = (k2*u_int(t-dt) - y2) /tau2
+            y2 += dy2dt
+            
+            
+        y += (dy1dt+dy2dt)
+        ys.append(y)
+    y_arr = np.array(ys)
+    return y_arr    
