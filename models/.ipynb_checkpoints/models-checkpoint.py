@@ -11,7 +11,7 @@ class Model(object):
  
 class FirstOrder(Model):
     """ 
-    This is First order  process, described by differential equation dydt = (ku-y)/tau.  In a first order process ,  the rate of change is           directly proportional to the driving force with the proportionality constant being 1/tau. The driving force is (ku - y) . As the  'y' gets       closer to 'ku' and driving force keeps on decreasing finally leading to zero , and the process reaches the steady state. 
+    This is First order  process, described by differential equation dydt = (ku-y)/tau.  In a first order process ,  the rate of change is                 directly proportional to the driving force with the proportionality constant being 1/tau. The driving force is (ku - y) . As the  'y' gets             closer to 'ku' and driving force keeps on decreasing finally leading to zero , and the process reaches the steady state. 
     """ 
     def __init__(self,k,tau,dt):
         self.k = k
@@ -35,13 +35,14 @@ class FirstOrder(Model):
         y_arr = np.array(ys)
         return y_arr 
     
-    def step():
+    def step(self): # does not work.
         """
         By default, a step signal , with length equal to 5 times the time contant is used to generate the output
         """
         step_signal = np.zeros(int(5*self.tau))
         step_signal[1:] = 1
-        return step_signal
+        step_sim = self.sim(step_signal)
+        return step_sim
 
 
 
@@ -49,7 +50,7 @@ class Ramp(Model):
     """ 
     This is First order Ramp process,  y = ku t  where the ramp gain follows a first order process.  
     For example , flow vs level is a ramp process. When you inrease a flow set point , the flow PV itself may  follow a first order proess ,
-    so a term dynamic gain is used (dyn_k). This dyn_k reaches the steady state value "k". The "first order" dynamics of the gain  is not           obviously visible in the step response or simulation . However , this is clearly visible in the impulse response.  
+    so a term dynamic gain is used (dyn_k). This dyn_k reaches the steady state value "k". The "first order" dynamics of the gain  is not                   obviously visible in the step response or simulation . However , this is clearly visible in the impulse response.  
     """ 
     def __init__(self,u,k,tau,dt):
         self.k =k
@@ -116,7 +117,7 @@ class SecondOrder2(Model):
     This allows to define inverse response systems , when k1 and k2 are in opposite directions and tau1 is very short,
     compared to tau2.
     Eg: In  columns with material balance control scheme , where the accumulator level is controlled by manipulating the reflux,
-    the relationship between bottom temperatre setpoint and the top product quality  follow the inverse response. As the bottom temperature         increased ,     the vapor  carries more heavier content.So the impurity in distillate increases first. However , as the accumulator level       increases due increased vapor traffic, this increase the reflux flow. As the sharpness of separation increases , the impurity level             decreases and reaches a new         steady state value lower than intitial value. 
+    the relationship between bottom temperatre setpoint and the top product quality  follow the inverse response. As the bottom temperature         increased ,     the vapor  carries more heavier content.So the impurity in distillate increases first. However , as the accumulator level       increases due increased vapor traffic, this increase the reflux flow. As the sharpness of separation increases , the impurity level             decreases and reaches a new  steady state value lower than intitial value. 
     This can be also used to define the overshoot response system, if both k1 and k2 are in same direction. 
     """ 
     def __init__(self,k1,k2,tau1,tau2,dt):
